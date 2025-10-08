@@ -1,0 +1,175 @@
+<% layout("/layouts/boilerplate") %>
+
+  <style>
+    #filters{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter{
+      position: relative;
+      text-align: center;
+      margin-right: 2rem;
+      margin-top: 2rem;
+      opacity: 0.7;
+    }
+
+    .filter:hover{
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    .filter p{
+      font-size: 0.8rem;
+    }
+
+    /* Dropdown box styling */
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 3rem; /* icon ke niche */
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    width: 200px;
+    padding: 0.5rem;
+    z-index: 10;
+  }
+
+  .dropdown p {
+    margin: 0.5rem 0;
+    font-size: 0.85rem;
+  }
+
+  /* Hover par dropdown show karo */
+  .filter:hover .dropdown {
+    display: block;
+  }
+
+    .tax-info{
+      display: none;
+    }
+
+    .tax-toggle{
+      border: 1px solid black;
+      border-radius: 1rem;
+      height: 3.25rem;
+      padding: 1rem;
+      margin-left:-1rem;
+      display: flex;
+      align-items: center;
+    }
+  </style>
+
+  <div id="filters">
+
+    <div class="filter">
+      <div><span class="iconify" data-icon="mdi:fire" data-width="20" data-height="20"></span></div>
+      <p>Trending</p>
+      
+    </div>
+
+    <div class="filter">
+      <div><span class="iconify" data-icon="mdi:bed" data-width="20" data-height="20"></span></div>
+      <p>Rooms</p>
+    </div>
+
+     <div class="filter">
+      <div><span class="iconify" data-icon="mdi:city" data-width="20" data-height="20"></span></div>
+      <p>Iconic Cities</p>
+    </div>
+
+    <div class="filter">
+      <div><span class="iconify" data-icon="mdi:terrain" data-width="20" data-height="20"></span></div>
+      <p>Mountains</p>
+      <!-- Dropdown content -->
+      <div class="dropdown">
+        <p> Himalayan Retreat</p>
+        <p> Manali Camp Stay</p>
+        <p> Shimla Wood House</p>
+      </div>
+    </div>
+
+     <div class="filter">
+      <div><span class="iconify" data-icon="mdi:castle" data-width="20" data-height="20"></span></div>
+      <p>Castles</p>
+    </div>
+
+    <div class="filter">
+      <div><span class="iconify" data-icon="mdi:pool" data-width="20" data-height="20"></span></div>
+      <p>Amazing Pools</p>
+    </div>
+
+      <div class="filter">
+      <div><span class="iconify" data-icon="mdi:campfire" data-width="20" data-height="20"></span></div>
+      <p>Camping</p>
+    </div>
+
+     <div class="filter">
+      <div><span class="iconify" data-icon="mdi:farm" data-width="20" data-height="20"></span></div>
+      <p>Farms</p>
+    </div>
+
+    <div class="filter">
+      <div><span class="iconify" data-icon="mdi:snowflake" data-width="20" data-height="20"></span></i></div>
+      <p>Arctic</p>
+      </div>
+
+      <div class="filter">
+      <div><span class="iconify" data-icon="fa6-solid:igloo" data-width="20" data-height="20"></span></div>
+      <p>Domes</p>
+    </div>
+
+    <div class="filter">
+      <div><span class="iconify" data-icon="mdi:sail-boat" data-width="20" data-height="20"></span></i></div>
+      <p>Boats</p>
+    </div>
+
+    <div class="tax-toggle">
+      <div class="form-check-reverse form-switch">
+  <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+  <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
+</div>
+    </div>
+  
+  </div>
+
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+    <% for(let listing of allListings) { %>
+  <a href="/listings/<%= listing._id %>" class="listing-link">
+    <div class="card col listing-card">
+    <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem"/>
+
+    <div class="card-img-overlay"></div>
+    <div class="card-body">
+      <p class="card-text">
+        <b><%= listing.title %></b> <br>
+        &#8377;<%= listing.price.toLocaleString("en-IN") %> / night
+        <i class="tax-info">&nbsp; &nbsp; +18% GST</i>
+      </p>
+    </div>
+  </div>
+  </a>
+  <% } %>
+  </div>
+
+  <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+
+  <script>
+    let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+    taxSwitch.addEventListener("click",()=>{
+      let taxInfo = document.getElementsByClassName("tax-info");
+      for(info of taxInfo){
+       if(info.style.display != "inline"){
+         info.style.display = "inline";
+       } else{
+         info.style.display = "none";
+       }
+      }
+    });
+  </script>
+
